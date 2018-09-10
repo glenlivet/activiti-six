@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+* Copyright 2012-2014 the original author or authors.
+*
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+*
+*      http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+-->
+<definitions id="processDefinitions"
+             xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+             xmlns:activiti="http://activiti.org/bpmn"
+             targetNamespace="processDefinitions">
+
+    <process id="waiter">
+
+        <startEvent id="start"/>
+
+        <sequenceFlow id="flow1" sourceRef="start" targetRef="managerReview"/>
+
+        <userTask id="managerReview" name="Manager Review">
+            <potentialOwner>
+                <resourceAssignmentExpression>
+                    <formalExpression>management</formalExpression>
+                </resourceAssignmentExpression>
+            </potentialOwner>
+        </userTask>
+
+        <sequenceFlow id="flow2" sourceRef="managerReview" targetRef="partnerReview"/>
+
+        <userTask id="partnerReview" name="Partner Review">
+            <potentialOwner>
+                <resourceAssignmentExpression>
+                    <formalExpression>partner</formalExpression>
+                </resourceAssignmentExpression>
+            </potentialOwner>
+        </userTask>
+
+        <sequenceFlow id="flow3" sourceRef="partnerReview" targetRef="clientReview"/>
+
+        <userTask id="clientReview" name="Client Review">
+            <potentialOwner>
+                <resourceAssignmentExpression>
+                    <formalExpression>client</formalExpression>
+                </resourceAssignmentExpression>
+            </potentialOwner>
+        </userTask>
+
+        <sequenceFlow id="flow4" sourceRef="clientReview" targetRef="end"/>
+
+        <endEvent id="end"/>
+
+    </process>
+
+</definitions>
